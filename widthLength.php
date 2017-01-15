@@ -1,35 +1,36 @@
 <?php
+header("content-type:text/html;charset=gbk");
 // 非常规宽度加价
 $widthArr = 
 Array
 (
     Array(
-        'minwidth' => 1.8,
-        'maxwidth' => 1.999,
+        'minwidth' => 1800,
+        'maxwidth' => 1999,
         'price' => 100
     ),
 
     Array(
-        'minwidth' => 2.0,
+        'minwidth' => 2000,
         'maxwidth' => 2.099,
         'price' => 80
     ),
 
     Array(
-        'minwidth' => 2.1,
-        'maxwidth' => 2.8,
+        'minwidth' => 2100,
+        'maxwidth' => 2800,
         'price' => 50
     ),
 
     Array(
-        'minwidth' => 2.801,
-        'maxwidth' => 3.101,
+        'minwidth' => 2801,
+        'maxwidth' => 3101,
         'price' => 70
     ),
 
     Array(
-        'minwidth' => 3.009,
-        'maxwidth' => 3.201,
+        'minwidth' => 3009,
+        'maxwidth' => 3201,
         'price' => 100
     )
 
@@ -40,21 +41,21 @@ $lengthArr = Array
 (
     Array(
         'minlength' => 0,
-        'maxlength' => 5.999,
+        'maxlength' => 5999,
         'price' => 100,
         'extraprice' => 50
     ),
 
     Array(
-        'minlength' => 6.000,
-        'maxlength' => 12.5,
+        'minlength' => 6000,
+        'maxlength' => 12500,
         'price' => 50,
         'extraprice' => 30
     ),
 
     Array(
-        'minlength' => 12.50,
-        'maxlength' => 15,
+        'minlength' => 12500,
+        'maxlength' => 15000,
         'price' => 100,
         'extraprice' => 50
     )

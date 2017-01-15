@@ -1,8 +1,5 @@
-<?php  
-
-?>
 <!DOCTYPE html>
-<html lang="zh-cn">
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -38,7 +35,7 @@
 	  <script src="./bs/js/respond.js"></script>
 	<![endif]-->
   </head>
-  <body>
+  <body  role="document">
 	<img src="./bgp.JPG" style="width:100%;position: absolute;left:0px;top:0px;z-index: -999;height: 100%">
 	<div class="container">
 		<form action="controller.php" method="post" enctype="multipart/form-data">
@@ -70,9 +67,6 @@
 		        uploadIcon: '<i class="glyphicon glyphicon-play-circle text-info"></i>',
 		    });
     	});
-
-    	// 计算按钮
-    	// $("input[name=submit]").click()
 
     </script>
   </body>

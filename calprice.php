@@ -1,25 +1,11 @@
 <?php
-header("content-type:text/html;charset=utf-8");
-// bscprice 基价
-// pgrade 钢种
-// thick 厚度
-// width 宽度
-// length 长度
-// border 两切四切
-// bxn 保性能
-// zlevel z向性能
-// tslevel 探伤级别
-// plevel 产品级别
+header("content-type:text/html;charset=gbk");
 
-// $price = get_price('Q235A',0,8.00,2.2,'指定长度',8,'两切','保性能','Z15',1);
-// echo "<pre>";
-// print_R($price);
-
-function get_price( $pgrade, $bscprice, $thick, $width, $typeLength, $length, $border, $bxn, $zlevel, $tslevel) {
+function get_price( $pgrade, $thick, $width, $typeLength, $length, $border, $bxn, $zlevel, $tslevel) {
     include "./thick.php";
     include "./widthLength.php";
-    echo "$pgrade, $bscprice, $thick, $width, $typeLength, $length, $border, $bxn, $zlevel, $tslevel";
-    $msg = "基价：".$bscprice."\r\n";
+    $bscprice = $BasePrice;
+    $msg = "基价：".$bscprice." ";
     // 厚度基价 thick
     for ($i=0; $i < count($thickArr); $i++) { 
         $rThick = $thickArr[$i];
@@ -29,7 +15,7 @@ function get_price( $pgrade, $bscprice, $thick, $width, $typeLength, $length, $b
             $rThick['edge'] == $border &&
             $rThick['guarantee'] == $bxn ) {
             $price['thick'] = $rThick['price'];
-            $msg .= "品种加价:".$price['thick']."\r\n";
+            $msg .= "品种加价:".$price['thick']." ";
             break;
         }else
             if ($i == count($thickArr)-1) 
@@ -37,13 +23,13 @@ function get_price( $pgrade, $bscprice, $thick, $width, $typeLength, $length, $b
     }
     // 宽度加价
     // 常规宽度不加价
-    $ifNorm = in_array($width, array(2.2,2.4,2.5));
+    $ifNorm = in_array($width, array(2200,2400,2500));
     // 另容器板两米宽也不加价
-    $ifR2 = in_array($pgrade, array('Q245R','Q345R')) && $width == 2.0;
+    $ifR2 = in_array($pgrade, array('Q245R','Q345R')) && $width == 2000;
     if ($ifNorm || $ifR2) {
         $price['width'] = 0;
-        $msg .= "宽度 $width 加价：".$price['width']."\r\n";
-    }elseif ($width <= 1.8 && $width >= 3.21)
+        $msg .= "宽度 $width 加价：".$price['width']." ";
+    }elseif ($width <= 1800 && $width >= 3210)
     // 宽度不符合要求
         return array('errmsg' => '宽度不符合要求');
     else
@@ -52,8 +38,8 @@ function get_price( $pgrade, $bscprice, $thick, $width, $typeLength, $length, $b
             $rWidth = $widthArr[$i];
             if ($rWidth['minwidth'] <= $width && $rWidth['maxwidth'] >= $width) {
                 $price['width'] = $rWidth['price'];
+                $msg .= "宽度 $width 加价：".$price['width']." ";
                 break;
-                $msg .= "宽度 $width 加价：".$price['width']."\r\n";
             }
         }
 
@@ -64,23 +50,23 @@ function get_price( $pgrade, $bscprice, $thick, $width, $typeLength, $length, $b
             // 指定长度值
             if ($rLength['minlength'] <= $length && $rLength['maxlength'] >= $length) {
                 $price['length'] = $rLength['price'];
-                $msg .= "长度 $length 加价：".$price['length']."\r\n";
+                $msg .= "长度 $length 加价：".$price['length']." ";
                 break;
             }else
                 // 指定长度值不符合范围
                 if ($i == count($lengthArr)-1) 
                     return array('errmsg' => '指定长度值不符合范围');
-        }elseif($length >= 8){
+        }elseif($length >= 8000){
             // $typeLength == "指定长度范围" 其范围大于8米
             $price['length'] = 0;
-            $msg .= "长度 $length 加价：".$price['length']."\r\n";
+            $msg .= "长度 $length 加价：".$price['length']." ";
             
         }else
             for ($i=0; $i < count($lengthArr); $i++) { 
                 $rLength = $lengthArr[$i];
                 if ($rLength['minlength'] <= $length && $rLength['maxLength'] >= $length) {
                     $price['length'] = $rLength['extraprice'];
-                    $msg .= "长度 $length 加价：".$price['length']."\r\n";
+                    $msg .= "长度 $length 加价：".$price['length']." ";
                     break;
                 }
             }
@@ -95,7 +81,7 @@ function get_price( $pgrade, $bscprice, $thick, $width, $typeLength, $length, $b
             $rZ = $zFunctionArr[$i];
             if ($rZ['zfunction'] == $zlevel) {
                 $price['zlevel'] = $rZ['price'];
-                $msg .= "Z向性能 $zlevel 加价：".$price['zlevel']."\r\n";
+                $msg .= "Z向性能 $zlevel 加价：".$price['zlevel']." ";
                 break;
             }else
                 // z向性能错误
@@ -112,7 +98,7 @@ function get_price( $pgrade, $bscprice, $thick, $width, $typeLength, $length, $b
             $rProbe = $probeArr[$i];
             if ($rProbe['level'] == $tslevel) {
                 $price['tslevel'] = $rProbe['price'];
-                $msg .= "探伤 $tslevel级 加价：".$price['tslevel']."\r\n";
+                $msg .= "探伤 $tslevel级 加价：".$price['tslevel']." ";
                 break;
             }else
                 // 探伤性能错误
@@ -121,7 +107,8 @@ function get_price( $pgrade, $bscprice, $thick, $width, $typeLength, $length, $b
         }
         
     }
-
+    // print_r($price);
+    // die;
     $res = array('price'=>array_sum($price) + $bscprice, 'msg'=>$msg);
     return $res;
 }
