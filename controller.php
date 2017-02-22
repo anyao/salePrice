@@ -1,11 +1,8 @@
 <?php 
-include "./calprice.php";
 include "./model.php";
-// 规定文件的路径桌面 salePrice 文件夹内
-define("PATH", 'C:\Users\Administrator\Desktop\salePrice\\');
+
 // 文件的绝对路径
 $path = PATH.$_FILES['file']['name'];
-
 $file = fopen($path,'r+');
 $goods_list = implode("\r\n",getList($file));
 fclose($file);

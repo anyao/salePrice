@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -46,7 +46,7 @@
 			</div>
 		</form>
 	</div>
-	<div class="foothome" style="color: #f0f0f0">© 河北普阳钢铁有限公司　2017-<?php echo date("Y")?></div>
+	<div class="foothome" style="color: #f0f0f0">© 河北普阳钢铁有限公司　2017-</div>
     <script src="./bs/js/jquery.min.js"></script>
     <script src="./bs/js/bootstrap.min.js"></script>
     <script src="./bs/js/fileinput.js"></script>

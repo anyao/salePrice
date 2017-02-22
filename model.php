@@ -1,18 +1,30 @@
 <?php  
+header("content-type:text/html;charset=gbk");
+include "./calprice.php";
 function getList($file){
+	$getPrice = new calPrice();
 	$i = 0;
-	while ($data = fgetcsv($file)) { //æ¯æ¬¡è¯»å–CSVé‡Œé¢çš„ä¸€è¡Œå†…å®¹
-		// ç¬¬ä¸€æ¬¡è¡Œä¸æ‰§è¡Œæ“ä½œ
+	while ($data = fgetcsv($file)) { //Ã¿´Î¶ÁÈ¡CSVÀïÃæµÄÒ»ÐÐÄÚÈÝ
+		if(empty($data[0]))
+			continue;
+		// µÚÒ»´ÎÐÐ²»Ö´ÐÐ²Ù×÷
 		if ($i != 0) {
-			$res = get_price($data[0],$data[1],$data[2],$data[3],$data[4],$data[5],$data[6],$data[7],$data[8]);
-			$data[9] = $res['price'];
-			$data[10] = $res['msg'];
+			$res = $getPrice->get_price($data[0],$data[1],$data[2],$data[3],$data[4],$data[5],$data[6],$data[7]);
+			if (isset($res['errmsg'])) {
+				$data[9] = $res['errmsg'];
+				$data[8] = 0;
+			}else{
+				$data[8] = $res['price'];
+				$data[9] = $res['msg'];
+				
+			}
 		}
 		++$i;
 		$goods_list[] = implode(",",$data);
 	}	
-	// die;
 	return $goods_list;
-
 }
+
+
+
 ?>
