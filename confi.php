@@ -16,6 +16,14 @@ function confi($file){
     return $confi;
 }
 
+// 将宽度规定处理为关联数组
+function trans($arr){
+    for ($i=0; $i < count($arr); $i++) { 
+        $tgtArr[$arr[$i]['pgrade']][] = $arr[$i];
+    }
+    return $tgtArr;
+}
+
 // // 将数组转为gbk编码
 // function array_iconv($arr, $in_charset="gbk", $out_charset="utf-8//IGNORE")
 // {
